@@ -15,18 +15,16 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class User {
 
-//    @Column(nullable = false)
-//    @Column(unique=true)
-    @NotEmpty
-    @Length(min = 3,max = 10)
-    @Pattern(regexp = "^[a-z0-9A-Z_]+")
+    @NotEmpty(message = "user name not empty")
+    @Length(min = 3,max = 10,message = "user name length not between 3-10")
+    @Pattern(regexp = "^[a-z0-9A-Z_]+",message = "user name only contain letter num _")
     String username;
 
-    @NotEmpty
-    @Length(min = 5,max = 12)
+    @NotEmpty(message = "password not empty")
+    @Length(min = 5,max = 12,message = "password illegal")
     String password;
 
-    @Email
+    @Email(message = "email address illegal")
     String email;
 
     public User(@NotEmpty @Length(min = 3, max = 10) @Pattern(regexp = "^[a-z0-9A-Z_]+") String username, @NotEmpty @Length(min = 5, max = 12) String password) {
