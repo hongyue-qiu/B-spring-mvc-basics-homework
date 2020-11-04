@@ -28,4 +28,13 @@ public class UserService {
         }
     }
 
+    public User userLogin(User user){
+        User loginUser = userList.stream()
+                .filter(u-> u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword()))
+                .findAny().orElse(null);
+        System.out.println(user);
+        return loginUser;
+    }
+
+
 }
