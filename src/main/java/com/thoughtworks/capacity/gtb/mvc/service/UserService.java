@@ -1,6 +1,7 @@
 package com.thoughtworks.capacity.gtb.mvc.service;
 
 import com.thoughtworks.capacity.gtb.mvc.dto.User;
+import com.thoughtworks.capacity.gtb.mvc.excption.NameNotUniqueException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ public class UserService {
         userList.add(new User("QHY","123456","12@1.com"));
     }
 
-    public List<User> userRegister(User user){
-        boolean bool = userList.stream().anyMatch(u -> u.getUsername() == user.getUsername());
-        if (bool) {
-            userList.add(userList.size() + 1, user);
+    public List<User> userRegister(User user) throws NameNotUniqueException {
+        boolean bool = userList.stream().anyMatch(u -> u.getUsername().equals(user.getUsername()));
+        if (!bool) {
+            userList.add(user);
             return userList;
         } else {
-            return userList;
+            throw new NameNotUniqueException("name not unique");
         }
     }
 
