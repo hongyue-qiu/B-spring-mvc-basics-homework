@@ -2,6 +2,7 @@ package com.thoughtworks.capacity.gtb.mvc.service;
 
 import com.thoughtworks.capacity.gtb.mvc.dto.User;
 import com.thoughtworks.capacity.gtb.mvc.excption.NameNotUniqueException;
+import com.thoughtworks.capacity.gtb.mvc.excption.NameOrPasswordException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,11 +29,11 @@ public class UserService {
         }
     }
 
-    public User userLogin(User user){
+    public User userLogin(User user) throws NameOrPasswordException {
         User loginUser = userList.stream()
                 .filter(u-> u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword()))
                 .findAny().orElse(null);
-        System.out.println(user);
+        if (loginUser == null) throw new NameOrPasswordException("用户名或密码错误");
         return loginUser;
     }
 
